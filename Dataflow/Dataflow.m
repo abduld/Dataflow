@@ -4,6 +4,7 @@ BeginPackage["Dataflow`Dataflow`"]
 ClearAll[
 	Dataflow,
 	ToBasicBlocks,
+	ToControlFlowDiagram,
 	BasicBlock,
 	Instruction
 ]
@@ -17,24 +18,78 @@ Begin["`Private`"]
 Dataflow[] :=
 	{}
 
+(* Def-Use Chain *)
+
+(* Use-Def Chain *)
+
+
+uses[Instruction[n_, Set, {_, r___}]] := uses /@ {r}  
+kill[Instruction[_, Set, {x_, ___}]] := x
+
+(*************************************************************************)
+(*************************************************************************)
+(*** Monotone Framework                                               ****)
+(*************************************************************************)
+(*************************************************************************)
+
+
+
+
 (*************************************************************************)
 (*************************************************************************)
 (*************************************************************************)
-(*** Basic Instruction Lowering                                       ****)
+(*** Basic Instruction Lowering & CFG Construction                    ****)
 (*************************************************************************)
 (*************************************************************************)
 (*************************************************************************)
 
 SetAttributes[ToBasicBlocks, {HoldAllComplete}]
-ToBasicBlocks[stmts0__] :=
-	Module[{state, stmts = Inactivate[stmts0]},
-		state["counter"] = 0;
+(* Examples:
+	ToBasicBlocks[
+		While[x == 1, x = 1];
+		j = 1;
+		If[x == 1, x = 1, y = 1];
+	]
+*)
+ToBasicBlocks[stmts__] :=
+	doLowering[stmts]["BasicBlocks"]
+	
+SetAttributes[ToControlFlowDiagram, {HoldAllComplete}]
+(* Examples:
+	ToControlFlowDiagram[
+		While[x == 1, x = 1];
+		j = 1;
+		If[x == 1, x = 1, y = 1];
+	]
+*)
+ToControlFlowDiagram[stmts__] :=
+	doLowering[stmts]["ControlFlowDiagram"]
+	
+SetAttributes[doLowering, {HoldAllComplete}]
+doLowering[stmts0__] :=
+	Module[{state, stmts = Inactivate[stmts0], bbs, cfg},
+		bbCounter = 0;
+		varCounter = 0;
+		state["instructionCounter"] = 0;
 		state["basicBlocks"] = Association[];
 		state["basicBlockOrder"] = {};
 		state["currentBB"] = "start";
+		state["controlFlow"] = {};
 		newBasicBlock[state, "start"];
 		lower[state, stmts];
-		BasicBlock[#, state["basicBlocks"][#]]& /@ state["basicBlockOrder"]
+		bbs = BasicBlock[#, state["basicBlocks"][#]]& /@ state["basicBlockOrder"];
+		cfg = Graph[
+			MapThread[
+				Tooltip[Property[#1, "BasicBlock" -> #2], #2]&,
+				{state["basicBlockOrder"], bbs}
+			],
+			state["controlFlow"],
+			VertexLabels -> "Name"
+		];
+		<|
+			"ControlFlowDiagram" -> cfg,
+			"BasicBlocks" -> bbs
+		|>
 	]
 
 ClearAll[lower]	
@@ -45,11 +100,14 @@ lower[state_, stmt:(Inactive[While][cond_, body_])] :=
 	Module[{condV, bodyLbl, endLbl},
 		bodyLbl = makeLabel[];
 		endLbl = makeLabel[];
+		addContolFlowEdge[state, state["currentBB"], bodyLbl];
+		addContolFlowEdge[state, bodyLbl, bodyLbl];
+		addContolFlowEdge[state, bodyLbl, endLbl];
 		newBasicBlock[state, bodyLbl];
 		condV = lower[state, cond];
-		addStatement[state, Instruction["Branch", {condV, bodyLbl, endLbl}]];
+		addStatement[state, newInstruction[state, "Branch", {condV, bodyLbl, endLbl}]];
 		lower[state, body];
-		addStatement[state, Instruction["Jump", bodyLbl]];
+		addStatement[state, newInstruction[state, "Jump", bodyLbl]];
 		newBasicBlock[state, endLbl]
 	]
 	 
@@ -59,16 +117,19 @@ lower[state_, stmt:(Inactive[If][cond_, then_, else_])] :=
 		elseLbl = makeLabel[];
 		endLbl = makeLabel[];
 		currBB = state["currentBB"];
+		addContolFlowEdge[state, currBB, thenLbl];
+		addContolFlowEdge[state, thenLbl, endLbl];
+		addContolFlowEdge[state, elseLbl, endLbl];
 		condV = lower[state, cond];
-		addStatement[state, Instruction["Branch", {condV, thenLbl, elseLbl}]];
+		addStatement[state, newInstruction[state, "Branch", {condV, thenLbl, elseLbl}]];
 		(* then *)
 			newBasicBlock[state, thenLbl];
 			lower[state, then];
-			addStatement[state, Instruction["Branch", endLbl]];
+			addStatement[state, newInstruction[state, "Branch", endLbl]];
 		(* else *)
 			newBasicBlock[state, elseLbl];
 			lower[state, else];
-			addStatement[state, Instruction["Branch", endLbl]];
+			addStatement[state, newInstruction[state, "Branch", endLbl]];
 		newBasicBlock[state, endLbl]
 	]
 	
@@ -76,7 +137,7 @@ lower[state_, stmt:(Inactive[Set][lhs0_, rhs0_])] :=
 	Module[{lhs, rhs},
 		rhs = lower[state, rhs0];
 		lhs = lower[state, lhs0];
-		addStatement[state, Instruction["Set", {lhs, rhs}]]
+		addStatement[state, newInstruction[state, "Set", {lhs, rhs}]]
 	] 
 
 lower[state_, Null] :=
@@ -87,18 +148,15 @@ lower[state_, Null] :=
 
 ClearAll[binaryOp]
 binaryOp[Plus | Minus | Divide] = True
+binaryOp[Equal | Less | Greater | LessEqual | GreaterEqual] = True
 binaryOp[___] := False
-
-ClearAll[cmpOp]
-cmpOp[Equal | Less | Greater | LessEqual | GreaterEqual] = True
-cmpOp[___] := False
-
-lower[state_, Inactive[op_?cmpOp][lhs0_, rhs0_]] :=
+	
+lower[state_, Inactive[op_?binaryOp][lhs0_, rhs0_]] :=
 	Module[{lhs, rhs, newVar},
 		lhs = lower[state, lhs0];
 		rhs = lower[state, rhs0];
 		newVar = makeVar[];
-		addStatement[state, Instruction["Set", {newVar, Instruction["Compare", {op, lhs, rhs}]}]];
+		addStatement[state, newInstruction[state, "Set", {newVar, Instruction[op, {lhs, rhs}]}]];
 		newVar
 	]
 	
@@ -110,7 +168,7 @@ newBasicBlock[state_, bb_] :=
 		AppendTo[state["basicBlockOrder"], bb];
 		state["currentBB"] = bb;
 		assoc = state["basicBlocks"];
-		assoc[bb] = {Instruction["Label", bb]};
+		assoc[bb] = {newInstruction[state, "Label", bb]};
 		state["basicBlocks"] = assoc
 	]
 	
@@ -124,18 +182,24 @@ addToBasicBlock[state_, bb_, stmt_] :=
 		state["basicBlocks"] = assoc;
 		stmt
 	]
+	
+(*************************************************************************)
+
+newInstruction[state_, args___] :=
+	Instruction[state["instructionCounter"]++, args]
+
+(*************************************************************************)
+
+
+addContolFlowEdge[state_, from_, to_] :=
+	AppendTo[state["controlFlow"], DirectedEdge[from, to]]
 
 ClearAll[bbCounter]
 bbCounter = 0
-
-(*************************************************************************)
+makeVar[] := "var" <> ToString[varCounter++]
 
 ClearAll[varCounter]
 varCounter = 0
-
-(*************************************************************************)
-
-makeVar[] := "var" <> ToString[varCounter++]
 makeLabel[] := "bb" <> ToString[bbCounter++]
 
 (*************************************************************************)
