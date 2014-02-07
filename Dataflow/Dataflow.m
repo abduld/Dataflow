@@ -6,7 +6,11 @@ ClearAll[
 	ToBasicBlocks,
 	ToControlFlowDiagram,
 	BasicBlock,
-	Instruction
+	Instruction,
+	PreOrderVertexList,
+	ReversePreOrderVertexList,
+	PostOrderVertexList,
+	ReversePostOrderScan
 ]
 
 Begin["`Private`"]
@@ -22,9 +26,45 @@ Dataflow[] :=
 
 (* Use-Def Chain *)
 
+(* Reaching Definitions *)
+
+(* *)
+
 
 uses[Instruction[n_, Set, {_, r___}]] := uses /@ {r}  
 kill[Instruction[_, Set, {x_, ___}]] := x
+
+PreOrderVertexList[g_] :=
+	Module[{state},
+		state["visited"] = {};
+		DeleteDuplicates[iPreOrderVertexList[g, "start", state]]
+	]
+iPreOrderVertexList[g_, root_, state_] :=
+	Module[{},
+		AppendTo[state["visited"], root];
+		Flatten[{
+			root,
+			iPreOrderVertexList[g, #, state]& /@ Select[Last /@ EdgeList[g, DirectedEdge[root, _]], FreeQ[state["visited"], #]&]
+		}]
+	]
+		 
+ReversePreOrderVertexList[g_] := Reverse[PreOrderVertexList[g]]
+
+PostOrderVertexList[g_] :=
+	Module[{state},
+		state["visited"] = {};
+		DeleteDuplicates[iPostOrderVertexList[g, "start", state]]
+	]
+iPostOrderVertexList[g_, root_, state_] :=
+	Module[{},
+		AppendTo[state["visited"], root];
+		Flatten[{
+			iPostOrderVertexList[g, #, state]& /@ Select[Last /@ EdgeList[g, DirectedEdge[root, _]], FreeQ[state["visited"], #]&],
+			root
+		}]
+	]
+	
+ReversePostOrderScan[g_] := Reverse[PostOrderVertexList[g]]
 
 (*************************************************************************)
 (*************************************************************************)
@@ -118,6 +158,7 @@ lower[state_, stmt:(Inactive[If][cond_, then_, else_])] :=
 		endLbl = makeLabel[];
 		currBB = state["currentBB"];
 		addContolFlowEdge[state, currBB, thenLbl];
+		addContolFlowEdge[state, currBB, elseLbl];
 		addContolFlowEdge[state, thenLbl, endLbl];
 		addContolFlowEdge[state, elseLbl, endLbl];
 		condV = lower[state, cond];
