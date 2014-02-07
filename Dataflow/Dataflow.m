@@ -10,7 +10,9 @@ ClearAll[
 	PreOrderVertexList,
 	ReversePreOrderVertexList,
 	PostOrderVertexList,
-	ReversePostOrderScan
+	ReversePostOrderVertexList,
+	GenSet,
+	KillSet
 ]
 
 Begin["`Private`"]
@@ -28,11 +30,24 @@ Dataflow[] :=
 
 (* Reaching Definitions *)
 
-(* *)
+(* kill and gen sets *)
+ 
+GenSet[BasicBlock[name_, stmts_]] := DeleteDuplicates@Values[Association[Flatten[igen /@ stmts]]]
+igen[Instruction[n_, "Set", {r_, l_}]] := Map[Rule[#, n]&, Flatten[{r, igen /@ {l}}]]
+igen[Instruction[n_, "Branch", {cond_, ___}]] := {Rule[cond, n]}
+igen[Instruction[op_, {lhs_, rhs_}]] := {lhs, rhs}
+igen[___] := {}
+
+KillSet[BasicBlock[name_, stmts_]] := DeleteDuplicates[Last /@ Flatten[igen /@ stmts]]
+ikill[Instruction[n_, "Set", {r_, _}]] := {n, r}
+ikill[___] := {}
 
 
-uses[Instruction[n_, Set, {_, r___}]] := uses /@ {r}  
-kill[Instruction[_, Set, {x_, ___}]] := x
+(*************************************************************************)
+(*************************************************************************)
+(*** Traversal                                                        ****)
+(*************************************************************************)
+(*************************************************************************)
 
 PreOrderVertexList[g_] :=
 	Module[{state},
@@ -64,7 +79,7 @@ iPostOrderVertexList[g_, root_, state_] :=
 		}]
 	]
 	
-ReversePostOrderScan[g_] := Reverse[PostOrderVertexList[g]]
+ReversePostOrderVertexList[g_] := Reverse[PostOrderVertexList[g]]
 
 (*************************************************************************)
 (*************************************************************************)

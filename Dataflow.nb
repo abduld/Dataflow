@@ -1,1 +1,1206 @@
-Notebook[{}]
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     49216,       1196]
+NotebookOptionsPosition[     46898,       1111]
+NotebookOutlinePosition[     47244,       1126]
+CellTagsIndexPosition[     47201,       1123]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Project: Dataflow", "Title"],
+
+Cell[TextData[{
+ "Wolfram ",
+ StyleBox["Workbench",
+  FontSlant->"Italic"],
+ " Feb 6, 2014."
+}], "Text"],
+
+Cell["This notebook is created to test the project.", "Text"],
+
+Cell[BoxData[
+ RowBox[{"ClearAll", "[", "y", "]"}]], "Input",
+ CellChangeTimes->{{3.600728999512518*^9, 3.6007290013196983`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ToBasicBlocks", "[", 
+  RowBox[{"If", "[", 
+   RowBox[{
+    RowBox[{"x", "==", "1"}], ",", 
+    RowBox[{"x", "=", "1"}], ",", 
+    RowBox[{"y", "=", "1"}]}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.6007270655391397`*^9, 3.6007271350330887`*^9}, 
+   3.600728355683141*^9, {3.600728545849156*^9, 3.6007285463122025`*^9}, {
+   3.6007289975283194`*^9, 3.6007290250380697`*^9}, {3.6007290837369394`*^9, 
+   3.6007290909596615`*^9}, 3.6007314090894513`*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"BasicBlock", "[", 
+    RowBox[{"\<\"start\"\>", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"Instruction", "[", 
+        RowBox[{"0", ",", "\<\"Label\"\>", ",", "\<\"start\"\>"}], "]"}], ",", 
+       RowBox[{"Instruction", "[", 
+        RowBox[{"1", ",", "\<\"Set\"\>", ",", 
+         RowBox[{"{", 
+          RowBox[{"\<\"var0\"\>", ",", 
+           RowBox[{"Instruction", "[", 
+            RowBox[{"\<\"Compare\"\>", ",", 
+             RowBox[{"{", 
+              RowBox[{"Equal", ",", "x", ",", "1"}], "}"}]}], "]"}]}], 
+          "}"}]}], "]"}], ",", 
+       RowBox[{"Instruction", "[", 
+        RowBox[{"2", ",", "\<\"Branch\"\>", ",", 
+         RowBox[{"{", 
+          RowBox[{"\<\"var0\"\>", ",", "\<\"bb0\"\>", ",", "\<\"bb1\"\>"}], 
+          "}"}]}], "]"}]}], "}"}]}], "]"}], ",", 
+   RowBox[{"BasicBlock", "[", 
+    RowBox[{"\<\"bb0\"\>", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"Instruction", "[", 
+        RowBox[{"3", ",", "\<\"Label\"\>", ",", "\<\"bb0\"\>"}], "]"}], ",", 
+       RowBox[{"Instruction", "[", 
+        RowBox[{"4", ",", "\<\"Set\"\>", ",", 
+         RowBox[{"{", 
+          RowBox[{"x", ",", "1"}], "}"}]}], "]"}], ",", 
+       RowBox[{"Instruction", "[", 
+        RowBox[{"5", ",", "\<\"Branch\"\>", ",", "\<\"bb2\"\>"}], "]"}]}], 
+      "}"}]}], "]"}], ",", 
+   RowBox[{"BasicBlock", "[", 
+    RowBox[{"\<\"bb1\"\>", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"Instruction", "[", 
+        RowBox[{"6", ",", "\<\"Label\"\>", ",", "\<\"bb1\"\>"}], "]"}], ",", 
+       RowBox[{"Instruction", "[", 
+        RowBox[{"7", ",", "\<\"Set\"\>", ",", 
+         RowBox[{"{", 
+          RowBox[{"y", ",", "1"}], "}"}]}], "]"}], ",", 
+       RowBox[{"Instruction", "[", 
+        RowBox[{"8", ",", "\<\"Branch\"\>", ",", "\<\"bb2\"\>"}], "]"}]}], 
+      "}"}]}], "]"}], ",", 
+   RowBox[{"BasicBlock", "[", 
+    RowBox[{"\<\"bb2\"\>", ",", 
+     RowBox[{"{", 
+      RowBox[{"Instruction", "[", 
+       RowBox[{"9", ",", "\<\"Label\"\>", ",", "\<\"bb2\"\>"}], "]"}], 
+      "}"}]}], "]"}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.6007270857251577`*^9, 3.600727135521137*^9}, {
+   3.6007282566372375`*^9, 3.600728267955369*^9}, {3.6007283238139544`*^9, 
+   3.600728355882161*^9}, 3.600728402631836*^9, 3.6007284876393356`*^9, 
+   3.6007285471212835`*^9, {3.6007286051220827`*^9, 3.6007287031928887`*^9}, 
+   3.6007287474933186`*^9, {3.6007287793485036`*^9, 3.6007288054611144`*^9}, {
+   3.6007288364932175`*^9, 3.6007288550260706`*^9}, 3.6007289286214294`*^9, {
+   3.600729002251792*^9, 3.600729091251691*^9}, 3.60072940667723*^9, 
+   3.600729439609523*^9, 3.6007294851920805`*^9, {3.6007295587974405`*^9, 
+   3.6007295906136217`*^9}, {3.6007296514007*^9, 3.6007297022697864`*^9}, 
+   3.6007301191114664`*^9, 3.600730189788533*^9, {3.6007314049990425`*^9, 
+   3.600731410037546*^9}, 3.600731448442386*^9, 3.6007315365851994`*^9, 
+   3.6007315791454554`*^9, 3.6007316204315834`*^9, {3.60073167700224*^9, 
+   3.6007317489664354`*^9}, 3.6007317896615047`*^9, 3.6007318577443123`*^9, 
+   3.6007319465751944`*^9, 3.60073202393493*^9, 3.600732341212654*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"g", "=", 
+  RowBox[{"ToControlFlowDiagram", "[", 
+   RowBox[{"If", "[", 
+    RowBox[{
+     RowBox[{"x", "==", "1"}], ",", 
+     RowBox[{"x", "=", "1"}], ",", 
+     RowBox[{"y", "=", "1"}]}], "]"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.60073202483902*^9, 3.600732029318468*^9}, {
+  3.6007413676752105`*^9, 3.6007413679552383`*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[
+  NamespaceBox["NetworkGraphics",
+   DynamicModuleBox[{Typeset`graph = HoldComplete[
+     Graph[{
+      "start", "bb0", "bb1", "bb2"}, {{{1, 2}, {1, 3}, {2, 4}, {3, 4}}, 
+       Null}, {Properties -> {
+        "bb1" -> {"BasicBlock" -> Dataflow`Dataflow`BasicBlock["bb1", {
+              Dataflow`Dataflow`Instruction[6, "Label", "bb1"], 
+              Dataflow`Dataflow`Instruction[7, "Set", {$CellContext`y, 1}], 
+              Dataflow`Dataflow`Instruction[8, "Branch", "bb2"]}], Tooltip -> 
+           Dataflow`Dataflow`BasicBlock["bb1", {
+              Dataflow`Dataflow`Instruction[6, "Label", "bb1"], 
+              Dataflow`Dataflow`Instruction[7, "Set", {$CellContext`y, 1}], 
+              Dataflow`Dataflow`Instruction[8, "Branch", "bb2"]}]}, 
+         "bb2" -> {"BasicBlock" -> Dataflow`Dataflow`BasicBlock["bb2", {
+              Dataflow`Dataflow`Instruction[9, "Label", "bb2"]}], Tooltip -> 
+           Dataflow`Dataflow`BasicBlock["bb2", {
+              Dataflow`Dataflow`Instruction[9, "Label", "bb2"]}]}, 
+         "bb0" -> {"BasicBlock" -> Dataflow`Dataflow`BasicBlock["bb0", {
+              Dataflow`Dataflow`Instruction[3, "Label", "bb0"], 
+              Dataflow`Dataflow`Instruction[4, "Set", {$CellContext`x, 1}], 
+              Dataflow`Dataflow`Instruction[5, "Branch", "bb2"]}], Tooltip -> 
+           Dataflow`Dataflow`BasicBlock["bb0", {
+              Dataflow`Dataflow`Instruction[3, "Label", "bb0"], 
+              Dataflow`Dataflow`Instruction[4, "Set", {$CellContext`x, 1}], 
+              Dataflow`Dataflow`Instruction[5, "Branch", "bb2"]}]}, 
+         "start" -> {"BasicBlock" -> Dataflow`Dataflow`BasicBlock["start", {
+              Dataflow`Dataflow`Instruction[0, "Label", "start"], 
+              Dataflow`Dataflow`Instruction[1, "Set", {"var0", 
+                Dataflow`Dataflow`Instruction[Equal, {$CellContext`x, 1}]}], 
+              Dataflow`Dataflow`Instruction[
+              2, "Branch", {"var0", "bb0", "bb1"}]}], Tooltip -> 
+           Dataflow`Dataflow`BasicBlock["start", {
+              Dataflow`Dataflow`Instruction[0, "Label", "start"], 
+              Dataflow`Dataflow`Instruction[1, "Set", {"var0", 
+                Dataflow`Dataflow`Instruction[Equal, {$CellContext`x, 1}]}], 
+              Dataflow`Dataflow`Instruction[
+              2, "Branch", {"var0", "bb0", "bb1"}]}]}}, 
+       VertexLabels -> {"Name"}}]], Typeset`boxes, Typeset`boxes$s2d = 
+    GraphicsGroupBox[{{
+       Arrowheads[0.03384563758389261], 
+       Directive[
+        Opacity[0.7], 
+        Hue[0.6, 0.7, 0.5]], FontFamily -> "Arial", 
+       ArrowBox[{
+         DynamicLocation["VertexID$1", Automatic, Center], 
+         DynamicLocation["VertexID$2", Automatic, Center]}], 
+       ArrowBox[{
+         DynamicLocation["VertexID$1", Automatic, Center], 
+         DynamicLocation["VertexID$3", Automatic, Center]}], 
+       ArrowBox[{
+         DynamicLocation["VertexID$2", Automatic, Center], 
+         DynamicLocation["VertexID$4", Automatic, Center]}], 
+       ArrowBox[{
+         DynamicLocation["VertexID$3", Automatic, Center], 
+         DynamicLocation["VertexID$4", Automatic, Center]}]}, {
+       Directive[
+        Hue[0.6, 0.2, 0.8], 
+        EdgeForm[
+         Directive[
+          GrayLevel[0], 
+          Opacity[0.7]]]], FontFamily -> "Arial", 
+       TagBox[{
+         TagBox[
+          TagBox[
+           TooltipBox[
+            DiskBox[{0., 2.}, 0.02261146496815286], 
+            RowBox[{"BasicBlock", "[", 
+              RowBox[{"\"start\"", ",", 
+                RowBox[{"{", 
+                  RowBox[{
+                    RowBox[{"Instruction", "[", 
+                    RowBox[{"0", ",", "\"Label\"", ",", "\"start\""}], "]"}], 
+                    ",", 
+                    RowBox[{"Instruction", "[", 
+                    RowBox[{"1", ",", "\"Set\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{"\"var0\"", ",", 
+                    RowBox[{"Instruction", "[", 
+                    RowBox[{"Equal", ",", 
+                    RowBox[{"{", 
+                    RowBox[{"x", ",", "1"}], "}"}]}], "]"}]}], "}"}]}], "]"}],
+                     ",", 
+                    RowBox[{"Instruction", "[", 
+                    RowBox[{"2", ",", "\"Branch\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{"\"var0\"", ",", "\"bb0\"", ",", "\"bb1\""}], 
+                    "}"}]}], "]"}]}], "}"}]}], "]"}]], Annotation[#, 
+            Dataflow`Dataflow`BasicBlock["start", {
+              Dataflow`Dataflow`Instruction[0, "Label", "start"], 
+              Dataflow`Dataflow`Instruction[1, "Set", {"var0", 
+                Dataflow`Dataflow`Instruction[Equal, {$CellContext`x, 1}]}], 
+              Dataflow`Dataflow`Instruction[
+              2, "Branch", {"var0", "bb0", "bb1"}]}], "Tooltip"]& ], 
+          "DynamicName", BoxID -> "VertexID$1"], 
+         InsetBox[
+          FormBox["\"start\"", TraditionalForm], 
+          Offset[{2, 2}, 
+           DynamicLocation["VertexID$1", Automatic, {Right, Top}]], 
+          ImageScaled[{0, 0}], BaseStyle -> "Graphics"]}, "DynamicName", 
+        BoxID -> "VertexLabelID$1"], 
+       TagBox[{
+         TagBox[
+          TagBox[
+           TooltipBox[
+            DiskBox[{0., 1.}, 0.02261146496815286], 
+            RowBox[{"BasicBlock", "[", 
+              RowBox[{"\"bb0\"", ",", 
+                RowBox[{"{", 
+                  RowBox[{
+                    RowBox[{"Instruction", "[", 
+                    RowBox[{"3", ",", "\"Label\"", ",", "\"bb0\""}], "]"}], 
+                    ",", 
+                    RowBox[{"Instruction", "[", 
+                    RowBox[{"4", ",", "\"Set\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{"x", ",", "1"}], "}"}]}], "]"}], ",", 
+                    RowBox[{"Instruction", "[", 
+                    RowBox[{"5", ",", "\"Branch\"", ",", "\"bb2\""}], "]"}]}],
+                   "}"}]}], "]"}]], Annotation[#, 
+            Dataflow`Dataflow`BasicBlock["bb0", {
+              Dataflow`Dataflow`Instruction[3, "Label", "bb0"], 
+              Dataflow`Dataflow`Instruction[4, "Set", {$CellContext`x, 1}], 
+              Dataflow`Dataflow`Instruction[5, "Branch", "bb2"]}], 
+            "Tooltip"]& ], "DynamicName", BoxID -> "VertexID$2"], 
+         InsetBox[
+          FormBox["\"bb0\"", TraditionalForm], 
+          Offset[{2, 2}, 
+           DynamicLocation["VertexID$2", Automatic, {Right, Top}]], 
+          ImageScaled[{0, 0}], BaseStyle -> "Graphics"]}, "DynamicName", 
+        BoxID -> "VertexLabelID$2"], 
+       TagBox[{
+         TagBox[
+          TagBox[
+           TooltipBox[
+            DiskBox[{1., 1.}, 0.02261146496815286], 
+            RowBox[{"BasicBlock", "[", 
+              RowBox[{"\"bb1\"", ",", 
+                RowBox[{"{", 
+                  RowBox[{
+                    RowBox[{"Instruction", "[", 
+                    RowBox[{"6", ",", "\"Label\"", ",", "\"bb1\""}], "]"}], 
+                    ",", 
+                    RowBox[{"Instruction", "[", 
+                    RowBox[{"7", ",", "\"Set\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{"y", ",", "1"}], "}"}]}], "]"}], ",", 
+                    RowBox[{"Instruction", "[", 
+                    RowBox[{"8", ",", "\"Branch\"", ",", "\"bb2\""}], "]"}]}],
+                   "}"}]}], "]"}]], Annotation[#, 
+            Dataflow`Dataflow`BasicBlock["bb1", {
+              Dataflow`Dataflow`Instruction[6, "Label", "bb1"], 
+              Dataflow`Dataflow`Instruction[7, "Set", {$CellContext`y, 1}], 
+              Dataflow`Dataflow`Instruction[8, "Branch", "bb2"]}], 
+            "Tooltip"]& ], "DynamicName", BoxID -> "VertexID$3"], 
+         InsetBox[
+          FormBox["\"bb1\"", TraditionalForm], 
+          Offset[{2, 2}, 
+           DynamicLocation["VertexID$3", Automatic, {Right, Top}]], 
+          ImageScaled[{0, 0}], BaseStyle -> "Graphics"]}, "DynamicName", 
+        BoxID -> "VertexLabelID$3"], 
+       TagBox[{
+         TagBox[
+          TagBox[
+           TooltipBox[
+            DiskBox[{0., 0.}, 0.02261146496815286], 
+            RowBox[{"BasicBlock", "[", 
+              RowBox[{"\"bb2\"", ",", 
+                RowBox[{"{", 
+                  RowBox[{"Instruction", "[", 
+                    RowBox[{"9", ",", "\"Label\"", ",", "\"bb2\""}], "]"}], 
+                  "}"}]}], "]"}]], Annotation[#, 
+            Dataflow`Dataflow`BasicBlock["bb2", {
+              Dataflow`Dataflow`Instruction[9, "Label", "bb2"]}], 
+            "Tooltip"]& ], "DynamicName", BoxID -> "VertexID$4"], 
+         InsetBox[
+          FormBox["\"bb2\"", TraditionalForm], 
+          Offset[{2, 2}, 
+           DynamicLocation["VertexID$4", Automatic, {Right, Top}]], 
+          ImageScaled[{0, 0}], BaseStyle -> "Graphics"]}, "DynamicName", 
+        BoxID -> "VertexLabelID$4"]}}], $CellContext`flag}, 
+    TagBox[
+     DynamicBox[GraphComputation`NetworkGraphicsBox[
+      3, Typeset`graph, Typeset`boxes, $CellContext`flag], {
+      CachedValue :> Typeset`boxes, SingleEvaluation -> True, 
+       SynchronousUpdating -> False, TrackedSymbols :> {$CellContext`flag}},
+      ImageSizeCache->{{18.194350004883052`, 
+       240.95459685465008`}, {-214.40487061069305`, 195.97342399531223`}}],
+     MouseAppearanceTag["NetworkGraphics"]],
+    AllowKernelInitialization->False,
+    UnsavedVariables:>{$CellContext`flag}]],
+  BaseStyle->{FontFamily -> "Arial"},
+  DefaultBaseStyle->{
+   "NetworkGraphics", FrontEnd`GraphicsHighlightColor -> Hue[0.8, 1., 0.6]},
+  FrameTicks->None,
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  ImagePadding->15,
+  LabelStyle->{FontFamily -> "Arial"}]], "Output",
+ CellChangeTimes->{
+  3.6007320295824947`*^9, 3.600732344918025*^9, 3.600732445133045*^9, {
+   3.6007413600024433`*^9, 3.6007413682762704`*^9}, 3.6007415217056117`*^9, {
+   3.6007415957630167`*^9, 3.6007416185522957`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"PostOrderVertexList", "[", "g", "]"}]], "Input",
+ CellChangeTimes->{{3.6007323607336063`*^9, 3.600732361839717*^9}, {
+  3.6007413634347863`*^9, 3.60074136966741*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"bb1\"\>", ",", "\<\"bb2\"\>", ",", "\<\"bb0\"\>", 
+   ",", "\<\"start\"\>"}], "}"}]], "Output",
+ CellChangeTimes->{3.600741369951438*^9, 3.600741454331875*^9, 
+  3.600741623868827*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ToBasicBlocks", "[", 
+  RowBox[{
+   RowBox[{"While", "[", 
+    RowBox[{
+     RowBox[{"x", "==", "1"}], ",", 
+     RowBox[{
+      RowBox[{"x", "=", "1"}], ";", 
+      RowBox[{"x", "=", 
+       RowBox[{"x", "+", "1"}]}]}]}], "]"}], ";", 
+   RowBox[{"j", "=", "1"}], ";"}], "]"}]], "Input",
+ CellChangeTimes->{{3.600730214337988*^9, 3.6007302213616905`*^9}, 
+   3.6007320383823743`*^9, 3.6007325953720675`*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"BasicBlock", "[", 
+    RowBox[{"\<\"start\"\>", ",", 
+     RowBox[{"{", 
+      RowBox[{"Instruction", "[", 
+       RowBox[{"0", ",", "\<\"Label\"\>", ",", "\<\"start\"\>"}], "]"}], 
+      "}"}]}], "]"}], ",", 
+   RowBox[{"BasicBlock", "[", 
+    RowBox[{"\<\"bb0\"\>", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"Instruction", "[", 
+        RowBox[{"1", ",", "\<\"Label\"\>", ",", "\<\"bb0\"\>"}], "]"}], ",", 
+       RowBox[{"Instruction", "[", 
+        RowBox[{"2", ",", "\<\"Set\"\>", ",", 
+         RowBox[{"{", 
+          RowBox[{"\<\"var0\"\>", ",", 
+           RowBox[{"Instruction", "[", 
+            RowBox[{"Equal", ",", 
+             RowBox[{"{", 
+              RowBox[{"x", ",", "1"}], "}"}]}], "]"}]}], "}"}]}], "]"}], ",", 
+       RowBox[{"Instruction", "[", 
+        RowBox[{"3", ",", "\<\"Branch\"\>", ",", 
+         RowBox[{"{", 
+          RowBox[{"\<\"var0\"\>", ",", "\<\"bb0\"\>", ",", "\<\"bb1\"\>"}], 
+          "}"}]}], "]"}], ",", 
+       RowBox[{"Instruction", "[", 
+        RowBox[{"4", ",", "\<\"Set\"\>", ",", 
+         RowBox[{"{", 
+          RowBox[{"x", ",", "1"}], "}"}]}], "]"}], ",", 
+       RowBox[{"Instruction", "[", 
+        RowBox[{"5", ",", "\<\"Set\"\>", ",", 
+         RowBox[{"{", 
+          RowBox[{"\<\"var1\"\>", ",", 
+           RowBox[{"Instruction", "[", 
+            RowBox[{"Plus", ",", 
+             RowBox[{"{", 
+              RowBox[{"x", ",", "1"}], "}"}]}], "]"}]}], "}"}]}], "]"}], ",", 
+       RowBox[{"Instruction", "[", 
+        RowBox[{"6", ",", "\<\"Set\"\>", ",", 
+         RowBox[{"{", 
+          RowBox[{"x", ",", "\<\"var1\"\>"}], "}"}]}], "]"}], ",", 
+       RowBox[{"Instruction", "[", 
+        RowBox[{"7", ",", "\<\"Jump\"\>", ",", "\<\"bb0\"\>"}], "]"}]}], 
+      "}"}]}], "]"}], ",", 
+   RowBox[{"BasicBlock", "[", 
+    RowBox[{"\<\"bb1\"\>", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"Instruction", "[", 
+        RowBox[{"8", ",", "\<\"Label\"\>", ",", "\<\"bb1\"\>"}], "]"}], ",", 
+       RowBox[{"Instruction", "[", 
+        RowBox[{"9", ",", "\<\"Set\"\>", ",", 
+         RowBox[{"{", 
+          RowBox[{"j", ",", "1"}], "}"}]}], "]"}]}], "}"}]}], "]"}]}], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.600730221698724*^9, 3.6007303115427074`*^9, 
+  3.600730352061759*^9, 3.6007320386554017`*^9, 3.600732595722103*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"g", "=", 
+  RowBox[{"ToControlFlowDiagram", "[", 
+   RowBox[{
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"x", "==", "1"}], ",", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"x", "==", "1"}], ",", 
+        RowBox[{"x", "=", "1"}], ",", 
+        RowBox[{"y", "=", "1"}]}], "]"}], ",", "t"}], "]"}], ";"}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.6007320427648125`*^9, 3.6007320491884546`*^9}, {
+   3.60073210804834*^9, 3.600732108967432*^9}, {3.600732587164247*^9, 
+   3.600732589683499*^9}, {3.600733198589383*^9, 3.6007331989724216`*^9}, {
+   3.600741920138451*^9, 3.600741936336071*^9}, 3.6007420312405605`*^9, {
+   3.600742087563192*^9, 3.600742099897425*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[
+  NamespaceBox["NetworkGraphics",
+   DynamicModuleBox[{Typeset`graph = HoldComplete[
+     Graph[{
+      "start", "bb0", "bb3", "bb4", "bb5", "bb1", "bb2"}, {{{1, 2}, {1, 6}, {
+       2, 7}, {6, 7}, {2, 3}, {2, 4}, {3, 5}, {4, 5}}, Null}, {
+      Properties -> {
+        "bb5" -> {"BasicBlock" -> Dataflow`Dataflow`BasicBlock["bb5", {
+              Dataflow`Dataflow`Instruction[12, "Label", "bb5"], 
+              Dataflow`Dataflow`Instruction[13, "Branch", "bb2"]}], Tooltip -> 
+           Dataflow`Dataflow`BasicBlock["bb5", {
+              Dataflow`Dataflow`Instruction[12, "Label", "bb5"], 
+              Dataflow`Dataflow`Instruction[13, "Branch", "bb2"]}]}, 
+         "bb1" -> {"BasicBlock" -> Dataflow`Dataflow`BasicBlock["bb1", {
+              Dataflow`Dataflow`Instruction[14, "Label", "bb1"], 
+              Dataflow`Dataflow`Instruction[15, "Branch", "bb2"]}], Tooltip -> 
+           Dataflow`Dataflow`BasicBlock["bb1", {
+              Dataflow`Dataflow`Instruction[14, "Label", "bb1"], 
+              Dataflow`Dataflow`Instruction[15, "Branch", "bb2"]}]}, 
+         "bb2" -> {"BasicBlock" -> Dataflow`Dataflow`BasicBlock["bb2", {
+              Dataflow`Dataflow`Instruction[16, "Label", "bb2"]}], Tooltip -> 
+           Dataflow`Dataflow`BasicBlock["bb2", {
+              Dataflow`Dataflow`Instruction[16, "Label", "bb2"]}]}, 
+         "bb3" -> {"BasicBlock" -> Dataflow`Dataflow`BasicBlock["bb3", {
+              Dataflow`Dataflow`Instruction[6, "Label", "bb3"], 
+              Dataflow`Dataflow`Instruction[7, "Set", {$CellContext`x, 1}], 
+              Dataflow`Dataflow`Instruction[8, "Branch", "bb5"]}], Tooltip -> 
+           Dataflow`Dataflow`BasicBlock["bb3", {
+              Dataflow`Dataflow`Instruction[6, "Label", "bb3"], 
+              Dataflow`Dataflow`Instruction[7, "Set", {$CellContext`x, 1}], 
+              Dataflow`Dataflow`Instruction[8, "Branch", "bb5"]}]}, 
+         "bb0" -> {"BasicBlock" -> Dataflow`Dataflow`BasicBlock["bb0", {
+              Dataflow`Dataflow`Instruction[3, "Label", "bb0"], 
+              Dataflow`Dataflow`Instruction[4, "Set", {"var1", 
+                Dataflow`Dataflow`Instruction[Equal, {$CellContext`x, 1}]}], 
+              Dataflow`Dataflow`Instruction[
+              5, "Branch", {"var1", "bb3", "bb4"}]}], Tooltip -> 
+           Dataflow`Dataflow`BasicBlock["bb0", {
+              Dataflow`Dataflow`Instruction[3, "Label", "bb0"], 
+              Dataflow`Dataflow`Instruction[4, "Set", {"var1", 
+                Dataflow`Dataflow`Instruction[Equal, {$CellContext`x, 1}]}], 
+              Dataflow`Dataflow`Instruction[
+              5, "Branch", {"var1", "bb3", "bb4"}]}]}, 
+         "bb4" -> {"BasicBlock" -> Dataflow`Dataflow`BasicBlock["bb4", {
+              Dataflow`Dataflow`Instruction[9, "Label", "bb4"], 
+              Dataflow`Dataflow`Instruction[10, "Set", {$CellContext`y, 1}], 
+              Dataflow`Dataflow`Instruction[11, "Branch", "bb5"]}], Tooltip -> 
+           Dataflow`Dataflow`BasicBlock["bb4", {
+              Dataflow`Dataflow`Instruction[9, "Label", "bb4"], 
+              Dataflow`Dataflow`Instruction[10, "Set", {$CellContext`y, 1}], 
+              Dataflow`Dataflow`Instruction[11, "Branch", "bb5"]}]}, 
+         "start" -> {"BasicBlock" -> Dataflow`Dataflow`BasicBlock["start", {
+              Dataflow`Dataflow`Instruction[0, "Label", "start"], 
+              Dataflow`Dataflow`Instruction[1, "Set", {"var0", 
+                Dataflow`Dataflow`Instruction[Equal, {$CellContext`x, 1}]}], 
+              Dataflow`Dataflow`Instruction[
+              2, "Branch", {"var0", "bb0", "bb1"}]}], Tooltip -> 
+           Dataflow`Dataflow`BasicBlock["start", {
+              Dataflow`Dataflow`Instruction[0, "Label", "start"], 
+              Dataflow`Dataflow`Instruction[1, "Set", {"var0", 
+                Dataflow`Dataflow`Instruction[Equal, {$CellContext`x, 1}]}], 
+              Dataflow`Dataflow`Instruction[
+              2, "Branch", {"var0", "bb0", "bb1"}]}]}}, 
+       VertexLabels -> {"Name"}}]], Typeset`boxes, Typeset`boxes$s2d = 
+    GraphicsGroupBox[{{
+       Arrowheads[0.028937842778793414`], 
+       Directive[
+        Opacity[0.7], 
+        Hue[0.6, 0.7, 0.5]], FontFamily -> "Arial", 
+       ArrowBox[{
+         DynamicLocation["VertexID$1", Automatic, Center], 
+         DynamicLocation["VertexID$2", Automatic, Center]}], 
+       ArrowBox[{
+         DynamicLocation["VertexID$1", Automatic, Center], 
+         DynamicLocation["VertexID$6", Automatic, Center]}], 
+       ArrowBox[{
+         DynamicLocation["VertexID$2", Automatic, Center], 
+         DynamicLocation["VertexID$3", Automatic, Center]}], 
+       ArrowBox[{
+         DynamicLocation["VertexID$2", Automatic, Center], 
+         DynamicLocation["VertexID$4", Automatic, Center]}], 
+       ArrowBox[{
+         DynamicLocation["VertexID$2", Automatic, Center], 
+         DynamicLocation["VertexID$7", Automatic, Center]}], 
+       ArrowBox[{
+         DynamicLocation["VertexID$3", Automatic, Center], 
+         DynamicLocation["VertexID$5", Automatic, Center]}], 
+       ArrowBox[{
+         DynamicLocation["VertexID$4", Automatic, Center], 
+         DynamicLocation["VertexID$5", Automatic, Center]}], 
+       ArrowBox[{
+         DynamicLocation["VertexID$6", Automatic, Center], 
+         DynamicLocation["VertexID$7", Automatic, Center]}]}, {
+       Directive[
+        Hue[0.6, 0.2, 0.8], 
+        EdgeForm[
+         Directive[
+          GrayLevel[0], 
+          Opacity[0.7]]]], FontFamily -> "Arial", 
+       TagBox[{
+         TagBox[
+          TagBox[
+           TooltipBox[
+            DiskBox[{0., 3.}, 0.030239520958083826`], 
+            RowBox[{"BasicBlock", "[", 
+              RowBox[{"\"start\"", ",", 
+                RowBox[{"{", 
+                  RowBox[{
+                    RowBox[{"Instruction", "[", 
+                    RowBox[{"0", ",", "\"Label\"", ",", "\"start\""}], "]"}], 
+                    ",", 
+                    RowBox[{"Instruction", "[", 
+                    RowBox[{"1", ",", "\"Set\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{"\"var0\"", ",", 
+                    RowBox[{"Instruction", "[", 
+                    RowBox[{"Equal", ",", 
+                    RowBox[{"{", 
+                    RowBox[{"x", ",", "1"}], "}"}]}], "]"}]}], "}"}]}], "]"}],
+                     ",", 
+                    RowBox[{"Instruction", "[", 
+                    RowBox[{"2", ",", "\"Branch\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{"\"var0\"", ",", "\"bb0\"", ",", "\"bb1\""}], 
+                    "}"}]}], "]"}]}], "}"}]}], "]"}]], Annotation[#, 
+            Dataflow`Dataflow`BasicBlock["start", {
+              Dataflow`Dataflow`Instruction[0, "Label", "start"], 
+              Dataflow`Dataflow`Instruction[1, "Set", {"var0", 
+                Dataflow`Dataflow`Instruction[Equal, {$CellContext`x, 1}]}], 
+              Dataflow`Dataflow`Instruction[
+              2, "Branch", {"var0", "bb0", "bb1"}]}], "Tooltip"]& ], 
+          "DynamicName", BoxID -> "VertexID$1"], 
+         InsetBox[
+          FormBox["\"start\"", TraditionalForm], 
+          Offset[{2, 2}, 
+           DynamicLocation["VertexID$1", Automatic, {Right, Top}]], 
+          ImageScaled[{0, 0}], BaseStyle -> "Graphics"]}, "DynamicName", 
+        BoxID -> "VertexLabelID$1"], 
+       TagBox[{
+         TagBox[
+          TagBox[
+           TooltipBox[
+            DiskBox[{0., 2.}, 0.030239520958083826`], 
+            RowBox[{"BasicBlock", "[", 
+              RowBox[{"\"bb0\"", ",", 
+                RowBox[{"{", 
+                  RowBox[{
+                    RowBox[{"Instruction", "[", 
+                    RowBox[{"3", ",", "\"Label\"", ",", "\"bb0\""}], "]"}], 
+                    ",", 
+                    RowBox[{"Instruction", "[", 
+                    RowBox[{"4", ",", "\"Set\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{"\"var1\"", ",", 
+                    RowBox[{"Instruction", "[", 
+                    RowBox[{"Equal", ",", 
+                    RowBox[{"{", 
+                    RowBox[{"x", ",", "1"}], "}"}]}], "]"}]}], "}"}]}], "]"}],
+                     ",", 
+                    RowBox[{"Instruction", "[", 
+                    RowBox[{"5", ",", "\"Branch\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{"\"var1\"", ",", "\"bb3\"", ",", "\"bb4\""}], 
+                    "}"}]}], "]"}]}], "}"}]}], "]"}]], Annotation[#, 
+            Dataflow`Dataflow`BasicBlock["bb0", {
+              Dataflow`Dataflow`Instruction[3, "Label", "bb0"], 
+              Dataflow`Dataflow`Instruction[4, "Set", {"var1", 
+                Dataflow`Dataflow`Instruction[Equal, {$CellContext`x, 1}]}], 
+              Dataflow`Dataflow`Instruction[
+              5, "Branch", {"var1", "bb3", "bb4"}]}], "Tooltip"]& ], 
+          "DynamicName", BoxID -> "VertexID$2"], 
+         InsetBox[
+          FormBox["\"bb0\"", TraditionalForm], 
+          Offset[{2, 2}, 
+           DynamicLocation["VertexID$2", Automatic, {Right, Top}]], 
+          ImageScaled[{0, 0}], BaseStyle -> "Graphics"]}, "DynamicName", 
+        BoxID -> "VertexLabelID$2"], 
+       TagBox[{
+         TagBox[
+          TagBox[
+           TooltipBox[
+            DiskBox[{-1., 1.}, 0.030239520958083826`], 
+            RowBox[{"BasicBlock", "[", 
+              RowBox[{"\"bb3\"", ",", 
+                RowBox[{"{", 
+                  RowBox[{
+                    RowBox[{"Instruction", "[", 
+                    RowBox[{"6", ",", "\"Label\"", ",", "\"bb3\""}], "]"}], 
+                    ",", 
+                    RowBox[{"Instruction", "[", 
+                    RowBox[{"7", ",", "\"Set\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{"x", ",", "1"}], "}"}]}], "]"}], ",", 
+                    RowBox[{"Instruction", "[", 
+                    RowBox[{"8", ",", "\"Branch\"", ",", "\"bb5\""}], "]"}]}],
+                   "}"}]}], "]"}]], Annotation[#, 
+            Dataflow`Dataflow`BasicBlock["bb3", {
+              Dataflow`Dataflow`Instruction[6, "Label", "bb3"], 
+              Dataflow`Dataflow`Instruction[7, "Set", {$CellContext`x, 1}], 
+              Dataflow`Dataflow`Instruction[8, "Branch", "bb5"]}], 
+            "Tooltip"]& ], "DynamicName", BoxID -> "VertexID$3"], 
+         InsetBox[
+          FormBox["\"bb3\"", TraditionalForm], 
+          Offset[{2, 2}, 
+           DynamicLocation["VertexID$3", Automatic, {Right, Top}]], 
+          ImageScaled[{0, 0}], BaseStyle -> "Graphics"]}, "DynamicName", 
+        BoxID -> "VertexLabelID$3"], 
+       TagBox[{
+         TagBox[
+          TagBox[
+           TooltipBox[
+            DiskBox[{0., 1.}, 0.030239520958083826`], 
+            RowBox[{"BasicBlock", "[", 
+              RowBox[{"\"bb4\"", ",", 
+                RowBox[{"{", 
+                  RowBox[{
+                    RowBox[{"Instruction", "[", 
+                    RowBox[{"9", ",", "\"Label\"", ",", "\"bb4\""}], "]"}], 
+                    ",", 
+                    RowBox[{"Instruction", "[", 
+                    RowBox[{"10", ",", "\"Set\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{"y", ",", "1"}], "}"}]}], "]"}], ",", 
+                    RowBox[{"Instruction", "[", 
+                    RowBox[{"11", ",", "\"Branch\"", ",", "\"bb5\""}], 
+                    "]"}]}], "}"}]}], "]"}]], Annotation[#, 
+            Dataflow`Dataflow`BasicBlock["bb4", {
+              Dataflow`Dataflow`Instruction[9, "Label", "bb4"], 
+              Dataflow`Dataflow`Instruction[10, "Set", {$CellContext`y, 1}], 
+              Dataflow`Dataflow`Instruction[11, "Branch", "bb5"]}], 
+            "Tooltip"]& ], "DynamicName", BoxID -> "VertexID$4"], 
+         InsetBox[
+          FormBox["\"bb4\"", TraditionalForm], 
+          Offset[{2, 2}, 
+           DynamicLocation["VertexID$4", Automatic, {Right, Top}]], 
+          ImageScaled[{0, 0}], BaseStyle -> "Graphics"]}, "DynamicName", 
+        BoxID -> "VertexLabelID$4"], 
+       TagBox[{
+         TagBox[
+          TagBox[
+           TooltipBox[
+            DiskBox[{-1., 0.}, 0.030239520958083826`], 
+            RowBox[{"BasicBlock", "[", 
+              RowBox[{"\"bb5\"", ",", 
+                RowBox[{"{", 
+                  RowBox[{
+                    RowBox[{"Instruction", "[", 
+                    RowBox[{"12", ",", "\"Label\"", ",", "\"bb5\""}], "]"}], 
+                    ",", 
+                    RowBox[{"Instruction", "[", 
+                    RowBox[{"13", ",", "\"Branch\"", ",", "\"bb2\""}], 
+                    "]"}]}], "}"}]}], "]"}]], Annotation[#, 
+            Dataflow`Dataflow`BasicBlock["bb5", {
+              Dataflow`Dataflow`Instruction[12, "Label", "bb5"], 
+              Dataflow`Dataflow`Instruction[13, "Branch", "bb2"]}], 
+            "Tooltip"]& ], "DynamicName", BoxID -> "VertexID$5"], 
+         InsetBox[
+          FormBox["\"bb5\"", TraditionalForm], 
+          Offset[{2, 2}, 
+           DynamicLocation["VertexID$5", Automatic, {Right, Top}]], 
+          ImageScaled[{0, 0}], BaseStyle -> "Graphics"]}, "DynamicName", 
+        BoxID -> "VertexLabelID$5"], 
+       TagBox[{
+         TagBox[
+          TagBox[
+           TooltipBox[
+            DiskBox[{1., 2.}, 0.030239520958083826`], 
+            RowBox[{"BasicBlock", "[", 
+              RowBox[{"\"bb1\"", ",", 
+                RowBox[{"{", 
+                  RowBox[{
+                    RowBox[{"Instruction", "[", 
+                    RowBox[{"14", ",", "\"Label\"", ",", "\"bb1\""}], "]"}], 
+                    ",", 
+                    RowBox[{"Instruction", "[", 
+                    RowBox[{"15", ",", "\"Branch\"", ",", "\"bb2\""}], 
+                    "]"}]}], "}"}]}], "]"}]], Annotation[#, 
+            Dataflow`Dataflow`BasicBlock["bb1", {
+              Dataflow`Dataflow`Instruction[14, "Label", "bb1"], 
+              Dataflow`Dataflow`Instruction[15, "Branch", "bb2"]}], 
+            "Tooltip"]& ], "DynamicName", BoxID -> "VertexID$6"], 
+         InsetBox[
+          FormBox["\"bb1\"", TraditionalForm], 
+          Offset[{2, 2}, 
+           DynamicLocation["VertexID$6", Automatic, {Right, Top}]], 
+          ImageScaled[{0, 0}], BaseStyle -> "Graphics"]}, "DynamicName", 
+        BoxID -> "VertexLabelID$6"], 
+       TagBox[{
+         TagBox[
+          TagBox[
+           TooltipBox[
+            DiskBox[{1., 1.}, 0.030239520958083826`], 
+            RowBox[{"BasicBlock", "[", 
+              RowBox[{"\"bb2\"", ",", 
+                RowBox[{"{", 
+                  RowBox[{"Instruction", "[", 
+                    RowBox[{"16", ",", "\"Label\"", ",", "\"bb2\""}], "]"}], 
+                  "}"}]}], "]"}]], Annotation[#, 
+            Dataflow`Dataflow`BasicBlock["bb2", {
+              Dataflow`Dataflow`Instruction[16, "Label", "bb2"]}], 
+            "Tooltip"]& ], "DynamicName", BoxID -> "VertexID$7"], 
+         InsetBox[
+          FormBox["\"bb2\"", TraditionalForm], 
+          Offset[{2, 2}, 
+           DynamicLocation["VertexID$7", Automatic, {Right, Top}]], 
+          ImageScaled[{0, 0}], BaseStyle -> "Graphics"]}, "DynamicName", 
+        BoxID -> "VertexLabelID$7"]}}], $CellContext`flag}, 
+    TagBox[
+     DynamicBox[GraphComputation`NetworkGraphicsBox[
+      3, Typeset`graph, Typeset`boxes, $CellContext`flag], {
+      CachedValue :> Typeset`boxes, SingleEvaluation -> True, 
+       SynchronousUpdating -> False, TrackedSymbols :> {$CellContext`flag}},
+      ImageSizeCache->{{-1., 397.6646359314589}, {-190.48208197462444`, 
+       171.7725768717256}}],
+     MouseAppearanceTag["NetworkGraphics"]],
+    AllowKernelInitialization->False,
+    UnsavedVariables:>{$CellContext`flag}]],
+  BaseStyle->{FontFamily -> "Arial"},
+  DefaultBaseStyle->{
+   "NetworkGraphics", FrontEnd`GraphicsHighlightColor -> Hue[0.8, 1., 0.6]},
+  FrameTicks->None,
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  ImagePadding->15,
+  ImageSize->{521., 384.},
+  LabelStyle->{FontFamily -> "Arial"}]], "Output",
+ CellChangeTimes->{
+  3.600732049507487*^9, 3.600732109236459*^9, 3.6007324568942213`*^9, 
+   3.6007324954390755`*^9, {3.6007325812676573`*^9, 3.600732591166647*^9}, {
+   3.6007331964391685`*^9, 3.600733199271452*^9}, 3.6007416472041607`*^9, 
+   3.600741831507589*^9, {3.6007419211025476`*^9, 3.600741936811118*^9}, 
+   3.600742031756612*^9, {3.600742087937229*^9, 3.600742100467482*^9}, {
+   3.60074214795123*^9, 3.600742162207656*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"PreOrderVertexList", "[", "g", "]"}]], "Input",
+ CellChangeTimes->{{3.600741834738912*^9, 3.6007418354729853`*^9}, 
+   3.6007422708595195`*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"start\"\>", ",", "\<\"bb0\"\>", ",", "\<\"bb2\"\>", 
+   ",", "\<\"bb3\"\>", ",", "\<\"bb5\"\>", ",", "\<\"bb4\"\>", 
+   ",", "\<\"bb1\"\>"}], "}"}]], "Output",
+ CellChangeTimes->{{3.600741835768015*^9, 3.6007418479652348`*^9}, 
+   3.6007418908345213`*^9, {3.600741922400677*^9, 3.6007419400264397`*^9}, {
+   3.6007420907535105`*^9, 3.600742103184754*^9}, {3.6007421507365084`*^9, 
+   3.600742163404775*^9}, 3.600742271183552*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"<<", "Dataflow`"}]], "Input",
+ CellChangeTimes->{{3.6007448085952682`*^9, 3.600744811107519*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"GenSet", "[", 
+  RowBox[{"BasicBlock", "[", 
+   RowBox[{"\"\<bb0\>\"", ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Instruction", "[", 
+       RowBox[{"1", ",", "\"\<Label\>\"", ",", "\"\<bb0\>\""}], "]"}], ",", 
+      RowBox[{"Instruction", "[", 
+       RowBox[{"2", ",", "\"\<Set\>\"", ",", 
+        RowBox[{"{", 
+         RowBox[{"\"\<var0\>\"", ",", 
+          RowBox[{"Instruction", "[", 
+           RowBox[{"Equal", ",", 
+            RowBox[{"{", 
+             RowBox[{"x", ",", "1"}], "}"}]}], "]"}]}], "}"}]}], "]"}], ",", 
+      RowBox[{"Instruction", "[", 
+       RowBox[{"3", ",", "\"\<Branch\>\"", ",", 
+        RowBox[{"{", 
+         RowBox[{"\"\<var0\>\"", ",", "\"\<bb0\>\"", ",", "\"\<bb1\>\""}], 
+         "}"}]}], "]"}], ",", 
+      RowBox[{"Instruction", "[", 
+       RowBox[{"4", ",", "\"\<Set\>\"", ",", 
+        RowBox[{"{", 
+         RowBox[{"x", ",", "1"}], "}"}]}], "]"}], ",", 
+      RowBox[{"Instruction", "[", 
+       RowBox[{"5", ",", "\"\<Set\>\"", ",", 
+        RowBox[{"{", 
+         RowBox[{"\"\<var1\>\"", ",", 
+          RowBox[{"Instruction", "[", 
+           RowBox[{"Plus", ",", 
+            RowBox[{"{", 
+             RowBox[{"x", ",", "1"}], "}"}]}], "]"}]}], "}"}]}], "]"}], ",", 
+      RowBox[{"Instruction", "[", 
+       RowBox[{"6", ",", "\"\<Set\>\"", ",", 
+        RowBox[{"{", 
+         RowBox[{"x", ",", "\"\<var1\>\""}], "}"}]}], "]"}], ",", 
+      RowBox[{"Instruction", "[", 
+       RowBox[{"7", ",", "\"\<Jump\>\"", ",", "\"\<bb0\>\""}], "]"}]}], 
+     "}"}]}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.6007447602754364`*^9, 3.6007447699124002`*^9}, 
+   3.600744806190027*^9, {3.6007449470281096`*^9, 3.600744970500457*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"3", ",", "6", ",", "5"}], "}"}]], "Output",
+ CellChangeTimes->{{3.6007447995263615`*^9, 3.600744827068115*^9}, 
+   3.60074486331874*^9, {3.6007449345268598`*^9, 3.6007449624896555`*^9}, {
+   3.6007450442862444`*^9, 3.6007450598151245`*^9}, 3.6007458014910393`*^9, {
+   3.600746659481476*^9, 3.6007466630644755`*^9}, {3.6007471793274755`*^9, 
+   3.6007472788484755`*^9}, {3.6007474206214757`*^9, 3.6007474597404757`*^9}, 
+   3.6007474993324757`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"GenSet", "[", 
+  RowBox[{"BasicBlock", "[", 
+   RowBox[{"\"\<bb0\>\"", ",", 
+    RowBox[{"{", 
+     RowBox[{"Instruction", "[", 
+      RowBox[{"2", ",", "\"\<Set\>\"", ",", 
+       RowBox[{"{", 
+        RowBox[{"\"\<var0\>\"", ",", 
+         RowBox[{"Instruction", "[", 
+          RowBox[{"Equal", ",", 
+           RowBox[{"{", 
+            RowBox[{"x", ",", "1"}], "}"}]}], "]"}]}], "}"}]}], "]"}], 
+     "}"}]}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.6007472830864754`*^9, 3.6007472907654753`*^9}, {
+   3.6007473924684753`*^9, 3.6007473941694756`*^9}, 3.6007474795704756`*^9}],
+
+Cell[BoxData[
+ RowBox[{"Dataflow`Dataflow`Private`xDeleteDuplicates", "[", 
+  RowBox[{"Dataflow`Dataflow`Private`xValues", "[", 
+   RowBox[{"<|", 
+    RowBox[{
+     RowBox[{"\<\"var0\"\>", "\[Rule]", "2"}], ",", 
+     RowBox[{"x", "\[Rule]", "2"}], ",", 
+     RowBox[{"1", "\[Rule]", "2"}]}], "|>"}], "]"}], "]"}]], "Output",
+ CellChangeTimes->{3.600747291191476*^9, 3.6007473946614757`*^9, 
+  3.6007474806764755`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"b", "=", 
+  RowBox[{"ToBasicBlocks", "[", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"i", "=", "m"}], ";", "\[IndentingNewLine]", 
+    RowBox[{"j", "=", "n"}], ";", "\[IndentingNewLine]", 
+    RowBox[{"a", "=", "u1"}], ";", "\[IndentingNewLine]", 
+    RowBox[{"i", "=", "u3"}], ";"}], "\[IndentingNewLine]", "]"}]}]], "Input",
+ CellChangeTimes->{{3.6007451778655505`*^9, 3.600745191579068*^9}, {
+  3.6007470573774757`*^9, 3.6007470656244755`*^9}, {3.6007475223214755`*^9, 
+  3.6007475614584756`*^9}, {3.6007476192634754`*^9, 3.6007476194384756`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"BasicBlock", "[", 
+   RowBox[{"\<\"start\"\>", ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Instruction", "[", 
+       RowBox[{"0", ",", "\<\"Label\"\>", ",", "\<\"start\"\>"}], "]"}], ",", 
+      RowBox[{"Instruction", "[", 
+       RowBox[{"1", ",", "\<\"Set\"\>", ",", 
+        RowBox[{"{", 
+         RowBox[{"i", ",", "m"}], "}"}]}], "]"}], ",", 
+      RowBox[{"Instruction", "[", 
+       RowBox[{"2", ",", "\<\"Set\"\>", ",", 
+        RowBox[{"{", 
+         RowBox[{"j", ",", "n"}], "}"}]}], "]"}], ",", 
+      RowBox[{"Instruction", "[", 
+       RowBox[{"3", ",", "\<\"Set\"\>", ",", 
+        RowBox[{"{", 
+         RowBox[{"a", ",", "u1"}], "}"}]}], "]"}], ",", 
+      RowBox[{"Instruction", "[", 
+       RowBox[{"4", ",", "\<\"Set\"\>", ",", 
+        RowBox[{"{", 
+         RowBox[{"i", ",", "u3"}], "}"}]}], "]"}]}], "}"}]}], "]"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{{3.6007451849593344`*^9, 3.6007451922996244`*^9}, {
+   3.6007457994304514`*^9, 3.6007458027307916`*^9}, {3.6007466638924756`*^9, 
+   3.6007466758484755`*^9}, 3.600746746132476*^9, 3.6007468652004757`*^9, {
+   3.6007470068524756`*^9, 3.600747066019476*^9}, {3.6007471475814753`*^9, 
+   3.600747174644476*^9}, {3.600747509986476*^9, 3.6007475314854755`*^9}, 
+   3.600747561783476*^9, 3.600747619724476*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"GenSet", "[", 
+  RowBox[{"First", "[", "b", "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.6007452250899124`*^9, 3.6007452272775283`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"4", ",", "2", ",", "3"}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.6007452276068687`*^9, 3.6007452775058703`*^9, 3.600745803552627*^9, {
+   3.6007466644394755`*^9, 3.6007466769194756`*^9}, 3.6007467465694757`*^9, {
+   3.6007468669284754`*^9, 3.6007468905484753`*^9}, 3.6007469664104757`*^9, {
+   3.6007470074634757`*^9, 3.6007470666474752`*^9}, {3.6007475108294754`*^9, 
+   3.6007475324564753`*^9}, 3.6007475625384755`*^9, 3.6007476203934755`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"KillSet", "[", 
+  RowBox[{"First", "[", "b", "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.6007451273298244`*^9, 3.6007451330463686`*^9}, {
+  3.6007451680881443`*^9, 3.6007451981489024`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"1", ",", "2", ",", "3", ",", "4"}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.6007451333487625`*^9, 3.600745198800596*^9, 3.600745804931351*^9, {
+   3.6007471387774754`*^9, 3.6007471761034756`*^9}, {3.6007475113504753`*^9, 
+   3.6007475630504756`*^9}, 3.6007476208874755`*^9}]
+}, Open  ]],
+
+Cell[BoxData["SymbolQ"], "Input",
+ CellChangeTimes->{{3.6007448336037683`*^9, 3.600744833605769*^9}}],
+
+Cell[BoxData["FreeQ"], "Input",
+ CellChangeTimes->{{3.6007418644288807`*^9, 3.6007418691903567`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"EdgeList", "[", "g", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"\<\"start\"\>", "\[DirectedEdge]", "\<\"bb0\"\>"}], ",", 
+   RowBox[{"\<\"bb0\"\>", "\[DirectedEdge]", "\<\"bb0\"\>"}], ",", 
+   RowBox[{"\<\"bb0\"\>", "\[DirectedEdge]", "\<\"bb1\"\>"}], ",", 
+   RowBox[{"\<\"bb1\"\>", "\[DirectedEdge]", "\<\"bb2\"\>"}], ",", 
+   RowBox[{"\<\"bb1\"\>", "\[DirectedEdge]", "\<\"bb3\"\>"}], ",", 
+   RowBox[{"\<\"bb2\"\>", "\[DirectedEdge]", "\<\"bb4\"\>"}], ",", 
+   RowBox[{"\<\"bb3\"\>", "\[DirectedEdge]", "\<\"bb4\"\>"}]}], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.600741726498089*^9, 3.6007418299154296`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"EdgeIndex", "[", 
+    RowBox[{"g", ",", "#"}], "]"}], "&"}], "/@", " ", 
+  RowBox[{"EdgeList", "[", "g", "]"}]}]], "Input",
+ CellChangeTimes->{{3.4949339562607803`*^9, 3.494933977466905*^9}, {
+  3.49493410122479*^9, 3.4949341282703667`*^9}, {3.495903307659215*^9, 
+  3.495903316883977*^9}, {3.600736238818376*^9, 3.600736276047098*^9}, {
+  3.60074117045449*^9, 3.600741173220767*^9}, {3.6007417024046803`*^9, 
+  3.600741722186658*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"1", ",", "2", ",", "3", ",", "4", ",", "5", ",", "6", ",", "7"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{{3.600736256070101*^9, 3.6007362763581295`*^9}, 
+   3.6007411741168566`*^9, 3.6007416494983897`*^9, {3.600741704317871*^9, 
+   3.6007417225816975`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"PropertyValue", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"g", ",", "\"\<bb0\>\""}], "}"}], ",", "\"\<BasicBlock\>\""}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.6007332000505295`*^9, 3.600733230297554*^9}}],
+
+Cell[BoxData[
+ RowBox[{"BasicBlock", "[", 
+  RowBox[{"\<\"bb0\"\>", ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"Instruction", "[", 
+      RowBox[{"1", ",", "\<\"Label\"\>", ",", "\<\"bb0\"\>"}], "]"}], ",", 
+     RowBox[{"Instruction", "[", 
+      RowBox[{"2", ",", "\<\"Set\"\>", ",", 
+       RowBox[{"{", 
+        RowBox[{"\<\"var0\"\>", ",", 
+         RowBox[{"Instruction", "[", 
+          RowBox[{"Equal", ",", 
+           RowBox[{"{", 
+            RowBox[{"x", ",", "1"}], "}"}]}], "]"}]}], "}"}]}], "]"}], ",", 
+     RowBox[{"Instruction", "[", 
+      RowBox[{"3", ",", "\<\"Branch\"\>", ",", 
+       RowBox[{"{", 
+        RowBox[{"\<\"var0\"\>", ",", "\<\"bb0\"\>", ",", "\<\"bb1\"\>"}], 
+        "}"}]}], "]"}], ",", 
+     RowBox[{"Instruction", "[", 
+      RowBox[{"4", ",", "\<\"Set\"\>", ",", 
+       RowBox[{"{", 
+        RowBox[{"x", ",", "1"}], "}"}]}], "]"}], ",", 
+     RowBox[{"Instruction", "[", 
+      RowBox[{"5", ",", "\<\"Set\"\>", ",", 
+       RowBox[{"{", 
+        RowBox[{"\<\"var1\"\>", ",", 
+         RowBox[{"Instruction", "[", 
+          RowBox[{"Plus", ",", 
+           RowBox[{"{", 
+            RowBox[{"x", ",", "1"}], "}"}]}], "]"}]}], "}"}]}], "]"}], ",", 
+     RowBox[{"Instruction", "[", 
+      RowBox[{"6", ",", "\<\"Set\"\>", ",", 
+       RowBox[{"{", 
+        RowBox[{"x", ",", "\<\"var1\"\>"}], "}"}]}], "]"}], ",", 
+     RowBox[{"Instruction", "[", 
+      RowBox[{"7", ",", "\<\"Jump\"\>", ",", "\<\"bb0\"\>"}], "]"}]}], 
+    "}"}]}], "]"}]], "Output",
+ CellChangeTimes->{{3.6007332142929535`*^9, 3.600733230545579*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["GraphTraverse"], "Input",
+ CellChangeTimes->{{3.600728502206792*^9, 3.6007285075643277`*^9}, {
+  3.6007327897295017`*^9, 3.600732795345063*^9}}],
+
+Cell[BoxData[
+ RowBox[{"<|", 
+  RowBox[{"\<\"start\"\>", "\[Rule]", 
+   RowBox[{"{", "}"}]}], "|>"}]], "Output",
+ CellChangeTimes->{3.6007285079033613`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Association", "[", 
+  RowBox[{"\"\<start\>\"", "\[Rule]", 
+   RowBox[{"{", "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.6007285225118227`*^9, 3.6007285296825395`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"<|", 
+  RowBox[{"\<\"start\"\>", "\[Rule]", 
+   RowBox[{"{", "}"}]}], "|>"}]], "Output",
+ CellChangeTimes->{3.6007285299635677`*^9}]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{783, 878},
+WindowMargins->{{560, Automatic}, {Automatic, 52}},
+FrontEndVersion->"10.0 for Microsoft Windows (64-bit) (January 29, 2014)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 34, 0, 90, "Title"],
+Cell[617, 24, 104, 5, 30, "Text"],
+Cell[724, 31, 61, 0, 30, "Text"],
+Cell[788, 33, 129, 2, 31, "Input"],
+Cell[CellGroupData[{
+Cell[942, 39, 481, 10, 31, "Input"],
+Cell[1426, 51, 3158, 68, 152, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4621, 124, 358, 9, 31, "Input"],
+Cell[4982, 135, 9853, 203, 447, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[14872, 343, 190, 3, 31, "Input"],
+Cell[15065, 348, 228, 5, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[15330, 358, 431, 12, 31, "Input"],
+Cell[15764, 372, 2366, 59, 152, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[18167, 436, 714, 17, 31, "Input"],
+Cell[18884, 455, 16344, 333, 399, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[35265, 793, 167, 3, 31, "Input"],
+Cell[35435, 798, 473, 8, 31, "Output"]
+}, Open  ]],
+Cell[35923, 809, 121, 2, 31, "Input"],
+Cell[CellGroupData[{
+Cell[36069, 815, 1713, 41, 132, "Input"],
+Cell[37785, 858, 488, 8, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[38310, 871, 610, 15, 52, "Input"],
+Cell[38923, 888, 418, 9, 52, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[39378, 902, 579, 10, 132, "Input"],
+Cell[39960, 914, 1333, 30, 72, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[41330, 949, 161, 3, 31, "Input"],
+Cell[41494, 954, 488, 8, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[42019, 967, 215, 4, 31, "Input"],
+Cell[42237, 973, 316, 6, 31, "Output"]
+}, Open  ]],
+Cell[42568, 982, 101, 1, 31, "Input"],
+Cell[42672, 985, 101, 1, 31, "Input"],
+Cell[CellGroupData[{
+Cell[42798, 990, 61, 1, 31, "Input"],
+Cell[42862, 993, 600, 11, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[43499, 1009, 482, 10, 31, "Input"],
+Cell[43984, 1021, 298, 6, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[44319, 1032, 236, 6, 31, "Input"],
+Cell[44558, 1040, 1568, 39, 112, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[46163, 1084, 158, 2, 31, "Input"],
+Cell[46324, 1088, 156, 4, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[46517, 1097, 194, 4, 31, "Input"],
+Cell[46714, 1103, 156, 4, 31, "Output"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+
